@@ -17,25 +17,6 @@
 
 &led_strip { chain-length = <36>; };
 / {
-    behaviors {
-        rgb_encoder: rgb_encoder {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "RGB_ENCODER";
-            #sensor-binding-cells = <0>;
-            bindings = <&rgb_ug RGB_BRI>, <&rgb_ug RGB_BRD>;
-        };
-    };
-
-    keymap {
-        compatible = "zmk,keymap";
-
-        base {
-            ...
-            sensor-bindings = <&rgb_encoder>;
-        }
-    };
-};
-/ {
 
    // Activate ADJUST layer by pressing raise and lower
     conditional_layers {
@@ -43,6 +24,14 @@
         adjust_layer {
             if-layers = <LOWER RAISE>;
             then-layer = <ADJUST>;
+        };
+    };
+    behaviors {
+        rgb_encoder: rgb_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "RGB_ENCODER";
+            #sensor-binding-cells = <0>;
+            bindings = <&rgb_ug RGB_BRI>, <&rgb_ug RGB_BRD>;
         };
     };
 

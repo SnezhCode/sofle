@@ -16,7 +16,25 @@
 #define ADJUST 3
 
 &led_strip { chain-length = <36>; };
+/ {
+    behaviors {
+        rgb_encoder: rgb_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "RGB_ENCODER";
+            #sensor-binding-cells = <0>;
+            bindings = <&rgb_ug RGB_BRI>, <&rgb_ug RGB_BRD>;
+        };
+    };
 
+    keymap {
+        compatible = "zmk,keymap";
+
+        base {
+            ...
+            sensor-bindings = <&rgb_encoder>;
+        }
+    };
+};
 / {
 
    // Activate ADJUST layer by pressing raise and lower
@@ -47,7 +65,7 @@
                  &kp LGUI &kp LALT &kp LCTRL &mo LOWER  &kp RET    &kp SPACE  &mo RAISE  &kp RCTRL &kp RALT  &kp RGUI
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp &rgb_ug RGB_BRD &rgb_ug RGB_BRI>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &rgb_encoder RGB_BRD RGB_BRI>;
         };
 
         lower_layer {
